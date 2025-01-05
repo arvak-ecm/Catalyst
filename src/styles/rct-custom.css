@@ -1,0 +1,88 @@
+.rct-tree-root ul {
+  line-height: 32px;
+}
+.rct-tree-root ul li {
+  position: relative;
+}
+
+.rct-tree-root ul li::before {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  border-left: 1px dashed hsl(var(--primary) / var(--opacity-line-tree));
+  border-bottom: 1px dashed hsl(var(--primary) / var(--opacity-line-tree));
+  content: '';
+  width: 8px;
+  height: 16px;
+}
+
+.rct-tree-root ul li::after {
+  position: absolute;
+  left: 15px;
+  bottom: 0px;
+  border-left: 1px dashed hsl(var(--primary) / var(--opacity-line-tree));
+  content: '';
+  width: 8px;
+  height: 100%;
+}
+
+.rct-tree-items-container li:last-child::after {
+  display: none;
+}
+.rct-tree-root > div > ul.rct-tree-items-container > li {
+  padding-left: 0px;
+}
+.rct-tree-root > div > ul.rct-tree-items-container > li:after,
+.rct-tree-root > div > ul.rct-tree-items-container > li:before {
+  display: none;
+}
+
+.rct-tree-root
+  > div
+  > ul.rct-tree-items-container
+  > li[aria-expanded='true']:last-child:after {
+  display: block;
+  left: 15px;
+  top: 22px;
+  height: 10px;
+}
+
+/*ul.rct-tree-items-container > li[aria-expanded='true']:last-child:after {
+  display: block;
+  left: 31px;
+  top: 22px;
+  height: 10px;
+}*/
+.rct-tree-items-container li {
+  [data-rct-item-focus='true'] {
+    outline: none;
+  }
+  [data-rct-item-focus='true']::before {
+    content: '';
+    position: absolute;
+    left: -150px;
+    width: calc(100% + 150px);
+    height: 100%;
+    background-color: hsl(var(--primary) / var(--opacity-item-selected));
+    z-index: 0;
+    &[data-rct-item-rename='true'] {
+      border-style: solid;
+      border-color: hsl(var(--primary) / var(--opacity-item-selected));
+      border-bottom: 1px;
+      border-top: 1px;
+    }
+  }
+  [data-rct-item-rename='true']::before {
+    border-bottom: 1px solid hsl(var(--primary));
+    border-top: 1px solid hsl(var(--primary));
+  }
+  .item-tree:hover::before {
+    content: '';
+    position: absolute;
+    left: -150px;
+    width: calc(100% + 150px);
+    height: 100%;
+    background: hsl(var(--primary) / var(--opacity-item-selected));
+    z-index: -1;
+  }
+}

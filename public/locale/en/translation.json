@@ -1,0 +1,26 @@
+{
+  "app": {
+    "name": "Catalyst",
+    "version": "0.0.1",
+    "author": "cardosomartin33@gmail.com",
+    "description": "Catalyst is a comprehensive toolkit that integrates various software solutions such as ApiStream, Base64 converters, image converters, canvas tools, and more. Our goal is to provide a centralized platform for tools that streamline workflows and enhance productivity. We are constantly expanding our features to meet the evolving needs of our users."
+  },
+  "apistream": {
+    "name": "ApiStream",
+    "version": "0.0.1",
+    "author": "cardosomartin33@gmail.com",
+    "description": "ApiStream is a powerful and versatile API testing tool that allows you to create, run, and manage API tests. It provides a user-friendly interface for creating and managing API requests, responses, and assertions. With ApiStream, you can easily test your APIs and ensure their functionality.",
+    "sidebar": {
+      "labelLinks": "Application",
+      "links": {
+        "collections": "Collections",
+        "enviroment": "Enviroment"
+      }
+    }
+  },
+  "components": {
+    "dialog": {
+      "btnClose": "Close"
+    }
+  }
+}

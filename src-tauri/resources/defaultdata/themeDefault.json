@@ -1,0 +1,8 @@
+{
+  "theme": "system",
+  "color": "rose",
+  "radius": "0.5rem",
+  "fontSize": "1rem",
+  "transtion": "300ms",
+  "animation": "600ms"
+}

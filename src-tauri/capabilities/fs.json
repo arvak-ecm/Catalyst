@@ -1,0 +1,34 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "fs",
+  "description": "Capability for the file system",
+  "windows": ["main"],
+  "permissions": [
+    "fs:allow-read-file",
+    "fs:allow-write-file",
+    "fs:allow-read-dir",
+    "fs:allow-copy-file",
+    "fs:allow-mkdir",
+    "fs:allow-remove",
+    "fs:allow-rename",
+    "fs:allow-exists",
+    "fs:read-all",
+    "fs:write-all",
+    "fs:default",
+    "fs:allow-resource-read-recursive",
+    "fs:scope-appconfig",
+    "fs:scope-appconfig-index",
+    "fs:scope-appconfig-recursive",
+    "fs:allow-appconfig-meta",
+    "fs:allow-appconfig-meta-recursive",
+    "fs:allow-appconfig-read",
+    "fs:allow-appconfig-read-recursive",
+    "fs:allow-appconfig-write",
+    "fs:allow-appconfig-write-recursive",
+    {
+      "identifier": "fs:allow-exists",
+      "allow": [{ "path": "$APPCONFIG/*" }]
+    }
+  ],
+  "platforms": ["macOS", "windows"]
+}

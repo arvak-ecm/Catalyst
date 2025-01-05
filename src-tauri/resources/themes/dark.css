@@ -1,0 +1,19 @@
+:root {
+  --color-get-primary: 144, 86%, 95%;
+  --color-get-foreground: 144, 61%, 34%;
+  --color-post-primary: 217, 100%, 97%;
+  --color-post-foreground: 221, 83%, 53%;
+  --color-put-primary: 50, 91%, 95%;
+  --color-put-foreground: 45, 96%, 40%;
+  --color-delete-primary: 0, 85%, 97%;
+  --color-delete-foreground: 0, 67%, 50%;
+  --color-patch-primary: 24, 100%, 97%;
+  --color-patch-foreground: 18, 86%, 47%;
+  --color-head-primary: 210, 28%, 98%;
+  --color-head-foreground: 215, 22%, 35%;
+  --color-options-primary: 250, 100%, 97%;
+  --color-options-foreground: 262, 83%, 58%;
+  --radius: 0.3rem;
+  --transition-duration: 150ms;
+  --animation-duration: 300ms;
+}

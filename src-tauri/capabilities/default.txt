@@ -1,0 +1,68 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["main"],
+  "permissions": [
+    "shell:default",
+    "core:default",
+    "shell:allow-open",
+    "core:window:default",
+    "core:window:allow-start-dragging",
+    "core:window:allow-close",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-internal-toggle-maximize",
+    "store:allow-set",
+    "store:default",
+    "http:allow-fetch",
+    "http:allow-fetch-cancel",
+    "http:allow-fetch-read-body",
+    "http:allow-fetch-send",
+    "http:default",
+    "fs:allow-read-file",
+    "fs:allow-write-file",
+    "fs:allow-read-dir",
+    "fs:allow-copy-file",
+    "fs:allow-mkdir",
+    "fs:allow-remove",
+    "fs:allow-rename",
+    "fs:allow-exists",
+    "fs:read-all",
+    "fs:write-all",
+    "fs:default",
+    "fs:allow-resource-read-recursive",
+    "fs:scope-appconfig",
+    "fs:scope-appconfig-index",
+    "fs:scope-appconfig-recursive",
+    "fs:allow-appconfig-meta",
+    "fs:allow-appconfig-meta-recursive",
+    "fs:allow-appconfig-read",
+    "fs:allow-appconfig-read-recursive",
+    "fs:allow-appconfig-write",
+    "fs:allow-appconfig-write-recursive",
+    {
+      "identifier": "fs:allow-exists",
+      "allow": [{ "path": "$APPCONFIG/*" }]
+    },
+
+    {
+      "identifier": "http:default",
+      "allow": [
+        {
+          "url": "http://**"
+        },
+        {
+          "url": "https://**"
+        },
+        {
+          "url": "http://*:*"
+        },
+        {
+          "url": "https://*:*"
+        }
+      ]
+    }
+  ],
+  "platforms": ["macOS", "windows"]
+}

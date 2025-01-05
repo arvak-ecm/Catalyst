@@ -1,0 +1,126 @@
+[role='treeitem']:has(.tree-app) {
+  font-size: inherit;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px dashed transparent;
+}
+
+[role='treeitem']:has(.tree-app):focus-visible {
+  background-color: hsl(var(--primary) / var(--opacity-item-selected));
+  outline: none;
+}
+
+[role='treeitem'][aria-selected='true']:has(.tree-app):focus-visible {
+  background-color: hsl(var(--primary) / var(--opacity-item-selected));
+  outline: none;
+}
+
+[role='treeitem']:has(.tree-app):hover {
+  background-color: hsl(
+    var(--accent-foreground) / var(--opacity-item-selected)
+  );
+}
+
+[role='treeitem'][aria-selected='true']:has(.tree-app) {
+  background-color: hsl(var(--primary) / var(--opacity-item-selected));
+}
+
+[role='treeitem']:has(.tree-app.willReceiveDrop) {
+  background-color: hsl(var(--primary));
+  border: 1px dashed hsl(var(--primary));
+}
+
+.tree-app {
+  color: hsl(var(--muted-foreground));
+}
+
+[role='treeitem'][aria-selected='true'] .tree-app {
+  color: hsl(var(--accent-foreground));
+}
+
+.tree-app {
+  display: flex;
+  align-items: center;
+  margin: 0 12px 0 2px;
+  height: 100%;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.tree-app span:first-child {
+  width: 20px;
+  display: flex;
+}
+
+.tree-app span:nth-child(2) {
+  margin-right: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.tree-app span:nth-child(3) {
+  flex: 1 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Gmail_dropCursor__EL200 {
+  width: 100%;
+  height: 0;
+  border-top: 2px dotted #fff;
+  position: absolute;
+}
+
+.Gmail_mainContent__ze4Za {
+  flex: 1 1;
+  display: flex;
+  min-height: 0;
+  gap: 8px;
+}
+
+.Gmail_content__VokKo {
+  overflow: auto;
+  background-color: hsla(0, 0%, 100%, 0.9);
+  border-radius: 16px;
+  color: #000;
+  padding: 32px;
+  margin: 132px auto 0;
+  max-width: 600px;
+  align-self: flex-start;
+}
+
+.Gmail_mobileWarning__4RvYj {
+  background: var(--primaryColor);
+  color: #fff;
+  padding: 1em;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 4px;
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .Gmail_mainContent__ze4Za {
+    flex-direction: column;
+    padding-right: 0;
+  }
+
+  .Gmail_content__VokKo {
+    order: 1;
+    margin: 6px;
+  }
+
+  .Gmail_sidebar__85ilV {
+    order: 2;
+    height: 80vh;
+    width: 100%;
+  }
+
+  .Gmail_mobileWarning__4RvYj {
+    display: block;
+  }
+}

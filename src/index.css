@@ -1,0 +1,58 @@
+@import './styles/fonts.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --week-col-width: 45px;
+    --gantt-header-height: 54px;
+    --gantt-row-height: 30px;
+    --form-width: 60%;
+    --form-input-height: 64px;
+    --color-system: 224, 10%, 94%;
+    --color-system-border: 181, 1%, 73%;
+    --layout-header-height: 48px;
+    --layout-footer-height: 24px;
+    --layout-container-with-footer-height: calc(100svh - 48px - 24px);
+    --layout-row-height: 32px;
+    --opacity-item-hover: 0.1;
+    --opacity-item-selected: 0.1;
+    --opacity-icon-selected: 0.5;
+    --opacity-icon-open: 0.7;
+    --opacity-line-tree: 0.3;
+
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+    --transition-duration: 300ms;
+    --animation-duration: 300ms;
+  }
+}
+
+.das {
+  --sidebar-background: 0 0% 98%;
+
+  --main-background: 0 0% 98%;
+}
+
+@layer base {
+  body {
+    font-family: 'Open Sans', sans-serif;
+    @apply bg-transparent text-foreground;
+  }
+}
+
+@layer utilities {
+  .transition-client {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: var(--transition-duration);
+    animation-duration: var(--animation-duration);
+  }
+}
