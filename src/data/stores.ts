@@ -14,5 +14,9 @@ export const stores = [
   {
     dbName: 'APISTREAM',
     storeName: 'ENVIROMENTS'
+  },
+  {
+    dbName: 'DECODE',
+    storeName: 'GLOBALS'
   }
 ]

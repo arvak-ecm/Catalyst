@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
+import { cn } from '@/lib/utils'
 
 const IconMinimize = (
   <svg width="10" height="10" viewBox="0 0 10 1" fill="currentColor">
@@ -27,6 +28,10 @@ const IconClose = (
 
 const appWindow = getCurrentWindow()
 
+const Styles = {
+  icon: 'flex items-center justify-center w-11 h-full text-primary-foreground hover:bg-accent/30 focus:outline-none transition-colors'
+}
+
 const WindowsSystemBar = () => {
   const [isMaximized, setIsMaximized] = useState(false)
 
@@ -34,7 +39,7 @@ const WindowsSystemBar = () => {
     <div className="flex flex-row items-center justify-end h-full">
       <button
         onClick={() => appWindow.minimize()}
-        className="flex items-center justify-center w-11 h-full text-gray-600 hover:bg-gray-200 focus:outline-none transition-colors duration-200"
+        className={Styles.icon}
         aria-label="Minimize"
       >
         {IconMinimize}
@@ -44,14 +49,14 @@ const WindowsSystemBar = () => {
           appWindow.toggleMaximize()
           setIsMaximized(await appWindow.isMaximized())
         }}
-        className="flex items-center justify-center w-11 h-full text-gray-600 hover:bg-gray-200 focus:outline-none transition-colors duration-200"
+        className={Styles.icon}
         aria-label={isMaximized ? 'Restore' : 'Maximize'}
       >
         {isMaximized ? IconMaximize : IconRestore}
       </button>
       <button
         onClick={() => appWindow.close()}
-        className="flex items-center justify-center w-11 h-full text-gray-600 hover:bg-red-500 hover:text-white focus:outline-none transition-colors duration-200"
+        className={cn(Styles.icon, 'hover:bg-red-500')}
         aria-label="Close"
       >
         {IconClose}

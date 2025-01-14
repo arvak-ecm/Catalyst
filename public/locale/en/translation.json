@@ -18,6 +18,19 @@
       }
     }
   },
+  "decode": {
+    "name": "Decode",
+    "version": "0.0.1",
+    "author": "cardosomartin33@gmail.com",
+    "description": "Decode is a comprehensive toolkit that integrates various software solutions such as ApiStream, Base64 converters, image converters, canvas tools, and more. Our goal is to provide a centralized platform for tools that streamline workflows and enhance productivity. We are constantly expanding our features to meet the evolving needs of our users.",
+    "sidebar": {
+      "labelLinks": "Application",
+      "links": {
+        "base64": "Base64",
+        "jwt": "Jwt"
+      }
+    }
+  },
   "components": {
     "dialog": {
       "btnClose": "Close"

@@ -46,6 +46,13 @@ const NavigationApp = () => {
             <CodeXml />
             <span>APIStream</span>
           </DropdownMenuItemLink>
+          <DropdownMenuItemLink
+            to="/decode/base64"
+            onClick={() => setOpen(false)}
+          >
+            <CodeXml />
+            <span>Decode</span>
+          </DropdownMenuItemLink>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="flex items-center gap-2">
               <Settings className="h-4 w-4" />

@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as DecodeLayoutImport } from './routes/decode/_layout'
 import { Route as Base64LayoutImport } from './routes/base64/_layout'
 import { Route as ApistreamLayoutImport } from './routes/apistream/_layout'
 import { Route as ApistreamLayoutEnviromentIndexImport } from './routes/apistream/_layout.enviroment/index'
@@ -20,11 +21,22 @@ import { Route as ApistreamLayoutCollectionIndexImport } from './routes/apistrea
 
 // Create Virtual Routes
 
+const DecodeImport = createFileRoute('/decode')()
 const Base64Import = createFileRoute('/base64')()
 const ApistreamImport = createFileRoute('/apistream')()
 const IndexLazyImport = createFileRoute('/')()
+const DecodeLayoutJwtIndexLazyImport = createFileRoute('/decode/_layout/jwt/')()
+const DecodeLayoutBase64IndexLazyImport = createFileRoute(
+  '/decode/_layout/base64/',
+)()
 
 // Create/Update Routes
+
+const DecodeRoute = DecodeImport.update({
+  id: '/decode',
+  path: '/decode',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const Base64Route = Base64Import.update({
   id: '/base64',
@@ -44,6 +56,11 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
+const DecodeLayoutRoute = DecodeLayoutImport.update({
+  id: '/_layout',
+  getParentRoute: () => DecodeRoute,
+} as any)
+
 const Base64LayoutRoute = Base64LayoutImport.update({
   id: '/_layout',
   getParentRoute: () => Base64Route,
@@ -53,6 +70,23 @@ const ApistreamLayoutRoute = ApistreamLayoutImport.update({
   id: '/_layout',
   getParentRoute: () => ApistreamRoute,
 } as any)
+
+const DecodeLayoutJwtIndexLazyRoute = DecodeLayoutJwtIndexLazyImport.update({
+  id: '/jwt/',
+  path: '/jwt/',
+  getParentRoute: () => DecodeLayoutRoute,
+} as any).lazy(() =>
+  import('./routes/decode/_layout.jwt/index.lazy').then((d) => d.Route),
+)
+
+const DecodeLayoutBase64IndexLazyRoute =
+  DecodeLayoutBase64IndexLazyImport.update({
+    id: '/base64/',
+    path: '/base64/',
+    getParentRoute: () => DecodeLayoutRoute,
+  } as any).lazy(() =>
+    import('./routes/decode/_layout.base64/index.lazy').then((d) => d.Route),
+  )
 
 const ApistreamLayoutEnviromentIndexRoute =
   ApistreamLayoutEnviromentIndexImport.update({
@@ -107,6 +141,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Base64LayoutImport
       parentRoute: typeof Base64Route
     }
+    '/decode': {
+      id: '/decode'
+      path: '/decode'
+      fullPath: '/decode'
+      preLoaderRoute: typeof DecodeImport
+      parentRoute: typeof rootRoute
+    }
+    '/decode/_layout': {
+      id: '/decode/_layout'
+      path: '/decode'
+      fullPath: '/decode'
+      preLoaderRoute: typeof DecodeLayoutImport
+      parentRoute: typeof DecodeRoute
+    }
     '/apistream/_layout/collection/': {
       id: '/apistream/_layout/collection/'
       path: '/collection'
@@ -120,6 +168,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/apistream/enviroment'
       preLoaderRoute: typeof ApistreamLayoutEnviromentIndexImport
       parentRoute: typeof ApistreamLayoutImport
+    }
+    '/decode/_layout/base64/': {
+      id: '/decode/_layout/base64/'
+      path: '/base64'
+      fullPath: '/decode/base64'
+      preLoaderRoute: typeof DecodeLayoutBase64IndexLazyImport
+      parentRoute: typeof DecodeLayoutImport
+    }
+    '/decode/_layout/jwt/': {
+      id: '/decode/_layout/jwt/'
+      path: '/jwt'
+      fullPath: '/decode/jwt'
+      preLoaderRoute: typeof DecodeLayoutJwtIndexLazyImport
+      parentRoute: typeof DecodeLayoutImport
     }
   }
 }
@@ -163,20 +225,51 @@ const Base64RouteChildren: Base64RouteChildren = {
 const Base64RouteWithChildren =
   Base64Route._addFileChildren(Base64RouteChildren)
 
+interface DecodeLayoutRouteChildren {
+  DecodeLayoutBase64IndexLazyRoute: typeof DecodeLayoutBase64IndexLazyRoute
+  DecodeLayoutJwtIndexLazyRoute: typeof DecodeLayoutJwtIndexLazyRoute
+}
+
+const DecodeLayoutRouteChildren: DecodeLayoutRouteChildren = {
+  DecodeLayoutBase64IndexLazyRoute: DecodeLayoutBase64IndexLazyRoute,
+  DecodeLayoutJwtIndexLazyRoute: DecodeLayoutJwtIndexLazyRoute,
+}
+
+const DecodeLayoutRouteWithChildren = DecodeLayoutRoute._addFileChildren(
+  DecodeLayoutRouteChildren,
+)
+
+interface DecodeRouteChildren {
+  DecodeLayoutRoute: typeof DecodeLayoutRouteWithChildren
+}
+
+const DecodeRouteChildren: DecodeRouteChildren = {
+  DecodeLayoutRoute: DecodeLayoutRouteWithChildren,
+}
+
+const DecodeRouteWithChildren =
+  DecodeRoute._addFileChildren(DecodeRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/apistream': typeof ApistreamLayoutRouteWithChildren
   '/base64': typeof Base64LayoutRoute
+  '/decode': typeof DecodeLayoutRouteWithChildren
   '/apistream/collection': typeof ApistreamLayoutCollectionIndexRoute
   '/apistream/enviroment': typeof ApistreamLayoutEnviromentIndexRoute
+  '/decode/base64': typeof DecodeLayoutBase64IndexLazyRoute
+  '/decode/jwt': typeof DecodeLayoutJwtIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/apistream': typeof ApistreamLayoutRouteWithChildren
   '/base64': typeof Base64LayoutRoute
+  '/decode': typeof DecodeLayoutRouteWithChildren
   '/apistream/collection': typeof ApistreamLayoutCollectionIndexRoute
   '/apistream/enviroment': typeof ApistreamLayoutEnviromentIndexRoute
+  '/decode/base64': typeof DecodeLayoutBase64IndexLazyRoute
+  '/decode/jwt': typeof DecodeLayoutJwtIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -186,8 +279,12 @@ export interface FileRoutesById {
   '/apistream/_layout': typeof ApistreamLayoutRouteWithChildren
   '/base64': typeof Base64RouteWithChildren
   '/base64/_layout': typeof Base64LayoutRoute
+  '/decode': typeof DecodeRouteWithChildren
+  '/decode/_layout': typeof DecodeLayoutRouteWithChildren
   '/apistream/_layout/collection/': typeof ApistreamLayoutCollectionIndexRoute
   '/apistream/_layout/enviroment/': typeof ApistreamLayoutEnviromentIndexRoute
+  '/decode/_layout/base64/': typeof DecodeLayoutBase64IndexLazyRoute
+  '/decode/_layout/jwt/': typeof DecodeLayoutJwtIndexLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -196,15 +293,21 @@ export interface FileRouteTypes {
     | '/'
     | '/apistream'
     | '/base64'
+    | '/decode'
     | '/apistream/collection'
     | '/apistream/enviroment'
+    | '/decode/base64'
+    | '/decode/jwt'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/apistream'
     | '/base64'
+    | '/decode'
     | '/apistream/collection'
     | '/apistream/enviroment'
+    | '/decode/base64'
+    | '/decode/jwt'
   id:
     | '__root__'
     | '/'
@@ -212,8 +315,12 @@ export interface FileRouteTypes {
     | '/apistream/_layout'
     | '/base64'
     | '/base64/_layout'
+    | '/decode'
+    | '/decode/_layout'
     | '/apistream/_layout/collection/'
     | '/apistream/_layout/enviroment/'
+    | '/decode/_layout/base64/'
+    | '/decode/_layout/jwt/'
   fileRoutesById: FileRoutesById
 }
 
@@ -221,12 +328,14 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   ApistreamRoute: typeof ApistreamRouteWithChildren
   Base64Route: typeof Base64RouteWithChildren
+  DecodeRoute: typeof DecodeRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   ApistreamRoute: ApistreamRouteWithChildren,
   Base64Route: Base64RouteWithChildren,
+  DecodeRoute: DecodeRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -241,7 +350,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/apistream",
-        "/base64"
+        "/base64",
+        "/decode"
       ]
     },
     "/": {
@@ -271,6 +381,20 @@ export const routeTree = rootRoute
       "filePath": "base64/_layout.tsx",
       "parent": "/base64"
     },
+    "/decode": {
+      "filePath": "decode",
+      "children": [
+        "/decode/_layout"
+      ]
+    },
+    "/decode/_layout": {
+      "filePath": "decode/_layout.tsx",
+      "parent": "/decode",
+      "children": [
+        "/decode/_layout/base64/",
+        "/decode/_layout/jwt/"
+      ]
+    },
     "/apistream/_layout/collection/": {
       "filePath": "apistream/_layout.collection/index.tsx",
       "parent": "/apistream/_layout"
@@ -278,6 +402,14 @@ export const routeTree = rootRoute
     "/apistream/_layout/enviroment/": {
       "filePath": "apistream/_layout.enviroment/index.tsx",
       "parent": "/apistream/_layout"
+    },
+    "/decode/_layout/base64/": {
+      "filePath": "decode/_layout.base64/index.lazy.tsx",
+      "parent": "/decode/_layout"
+    },
+    "/decode/_layout/jwt/": {
+      "filePath": "decode/_layout.jwt/index.lazy.tsx",
+      "parent": "/decode/_layout"
     }
   }
 }
