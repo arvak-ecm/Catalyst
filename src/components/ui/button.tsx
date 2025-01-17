@@ -28,7 +28,7 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         closeTab: 'ml-auto hover:bg-red-600 hover:text-white cursor-pointer',
         link: 'bg-primary text-primary-foreground shadow hover:bg-primary/90 gap-0',
-        icon: 'hover:bg-background hover:text-accent-foreground gap-0',
+        icon: 'hover:text-primary gap-0',
         toggleSidebar: 'hover:bg-none hover:text-primary border bg-accent'
       },
       size: {
