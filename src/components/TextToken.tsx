@@ -5,6 +5,7 @@ import { RichTextarea } from 'rich-textarea'
 interface props {
   className?: string
   value?: string
+  onValueChange?: (value: string) => void
 }
 const Style = {
   textArea: {
@@ -18,20 +19,23 @@ const Style = {
   }
 }
 
-const colors = ['text-red-500', 'text-blue-500', 'text-pink-500']
+const colors = ['text-red-500', 'text-blue-500', 'text-green-500']
 
-const TextToken = ({ className, value = '' }: props) => {
+const TextToken = ({ className, value = '', onValueChange }: props) => {
   const [inputValue, setInputValue] = useState(value)
-
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value
+    setInputValue(newValue)
+    if (onValueChange) {
+      onValueChange(newValue) // Notificar al componente padre
+    }
+  }
   return (
     <div className={cn('font-mono text-sm', className)}>
       <RichTextarea
-        class="text-token"
         value={inputValue}
         style={Style.textArea}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-          setInputValue(e.target.value)
-        }
+        onChange={handleChange}
       >
         {(v: string) => {
           const parts = v.split('.')

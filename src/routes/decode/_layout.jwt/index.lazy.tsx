@@ -8,6 +8,8 @@ import {
 import TextToken from '@/components/TextToken'
 import { TOKEN_VALUE } from '@/store/storeGlobal'
 
+import { invoke } from '@tauri-apps/api/core'
+
 TOKEN_VALUE.value =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
 
@@ -16,6 +18,18 @@ export const Route = createLazyFileRoute('/decode/_layout/jwt/')({
 })
 function RouteComponent() {
   console.log(`🚀 ======== ROUTE LAYOUT JWT ======== 🚀`)
+
+  const handleChangeToken = (value: string) => {
+    invoke('plugin:jwt|test').then((result) => {
+      console.log(result)
+    })
+    invoke('plugin:jwt|validate', {
+      token: value,
+      secretKey: 'your-256-bit-secret'
+    }).then((result) => {
+      console.log(result)
+    })
+  }
 
   return (
     <div className="flex-1 h-full flex flex-col gap-2 p-2">
@@ -27,7 +41,10 @@ function RouteComponent() {
         <ResizablePanel minSize={35} defaultSize={50} className="pr-2">
           <Panel title="JSON Web Token (JWT)" idAction="JWT">
             <div className="relative w-full h-full">
-              <TextToken value={TOKEN_VALUE.value} />
+              <TextToken
+                value={TOKEN_VALUE.value}
+                onValueChange={handleChangeToken}
+              />
             </div>
           </Panel>
         </ResizablePanel>

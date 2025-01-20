@@ -3,6 +3,8 @@ use tauri_plugin_log::{fern::colors::ColoredLevelConfig, Target, TargetKind};
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 use native_dialog::{MessageDialog, MessageType};
 
+mod api;
+
 #[cfg(target_os = "macos")]
 mod macos;
 
@@ -39,13 +41,16 @@ pub fn run() {
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(log.build())
-        .invoke_handler(tauri::generate_handler![greet]);
+				.plugin(api::jwt::init())
+        .invoke_handler(tauri::generate_handler![
+					greet
+				]);
 
     #[cfg(target_os = "macos")]
     {
         // builder = builder.plugin(macos::window_ext::init());
     }
-
+		tracing::info!("Initializing app...");
     let app = builder.build(tauri::generate_context!());
 
     match app {
