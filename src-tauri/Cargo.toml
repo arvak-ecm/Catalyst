@@ -19,7 +19,7 @@ tauri-build = { version = "2.0.5", features = ["codegen"] }
 
 
 [dependencies]
-tauri = { version = "2.2.3", features = [ "devtools", "protocol-asset", "unstable"] }
+tauri = { version = "2.2.3", features = [ "macos-private-api", "devtools", "protocol-asset", "unstable"] }
 tauri-plugin-shell = "2.2.0"
 tauri-plugin-os = "2.2.0"
 tauri-plugin-fs = { version = "2.2.0", features = ["watch"] }
@@ -37,6 +37,8 @@ hex = "0.4.3"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
+base64 = "0.22.1"
+
 jsonwebtoken = "9.3.0"
 
 tokio = { version = "1", features = ["full"] }
@@ -46,8 +48,6 @@ tracing-error = "0.2.1"
 thiserror = "1.0"
 
 native-dialog = "0.7.0"
-
-lazy_static = "1"
 
 [target.'cfg(target_os = "macos")'.dependencies]
 cocoa = "0.26.0"

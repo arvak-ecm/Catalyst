@@ -3,5 +3,10 @@
   "description": "",
   "local": true,
   "windows": ["main"],
-  "permissions": ["dialog:allow-open", "dialog:allow-confirm", "jwt:default"]
+  "permissions": [
+    "log:default",
+    "dialog:allow-open",
+    "dialog:allow-confirm",
+    "jwt:default"
+  ]
 }

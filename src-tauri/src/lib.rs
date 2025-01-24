@@ -5,8 +5,8 @@ use native_dialog::{MessageDialog, MessageType};
 
 mod api;
 
-#[cfg(target_os = "macos")]
-mod macos;
+// #[cfg(target_os = "macos")]
+// mod macos;
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -41,16 +41,14 @@ pub fn run() {
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(log.build())
-				.plugin(api::jwt::init())
-        .invoke_handler(tauri::generate_handler![
-					greet
-				]);
+        .plugin(api::jwt::init())
+        .invoke_handler(tauri::generate_handler![greet]);
 
     #[cfg(target_os = "macos")]
     {
         // builder = builder.plugin(macos::window_ext::init());
     }
-		tracing::info!("Initializing app...");
+    tracing::info!("Initializing app...");
     let app = builder.build(tauri::generate_context!());
 
     match app {
