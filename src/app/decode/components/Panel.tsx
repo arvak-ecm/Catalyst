@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import { actionBar } from '@/store/storeGlobal'
+import { actionBar, TOKEN_VALUE } from '@/store/storeGlobal'
 import { effect } from '@preact/signals-react'
 import { useEffect } from 'react'
 
@@ -25,7 +25,7 @@ const Panel = ({ title, className, idAction, children }: props) => {
         console.log(`COPY_${idAction}`)
         break
       case `CLEAR_${idAction}`:
-        console.log(`CLEAR_${idAction}`)
+        if (idAction === 'JWT') TOKEN_VALUE.value = ''
         break
     }
   })

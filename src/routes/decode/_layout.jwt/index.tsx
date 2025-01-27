@@ -1,36 +1,60 @@
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import Panel from '@/app/decode/components/Panel'
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup
 } from '@/components/ui/resizable'
+import ReactJsonView from '@microlink/react-json-view'
 import TextToken from '@/components/TextToken'
 import { TOKEN_VALUE } from '@/store/storeGlobal'
 
 import { invoke } from '@tauri-apps/api/core'
+import { signal } from '@preact/signals-react'
+import { JwtResponse } from '@/types/jwt'
 
 TOKEN_VALUE.value =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
 
-export const Route = createLazyFileRoute('/decode/_layout/jwt/')({
-  component: RouteComponent
+export const Route = createFileRoute('/decode/_layout/jwt/')({
+  loader: async () => {
+    await handleChangeToken(TOKEN_VALUE.value)
+  },
+  component: () => {
+    //handleChangeToken(TOKEN_VALUE.value)
+    return RouteComponent()
+  }
 })
+
+const header = signal<Record<string, string>>({})
+const payload = signal<Record<string, string>>({})
+
+const cleanValues = () => {
+  header.value = {}
+  payload.value = {}
+}
+
+const handleChangeToken = async (value: string) => {
+  if (!value) {
+    cleanValues()
+    return
+  }
+  invoke('plugin:jwt|test').then((result) => {
+    console.log(result)
+  })
+  const result = (await invoke('plugin:jwt|validate', {
+    token: value,
+    secretKey: 'your-256-bit-secret'
+  })) as JwtResponse
+  if (result.error) {
+    cleanValues()
+    return
+  }
+  header.value = result.header
+  payload.value = result.payload
+}
 function RouteComponent() {
   console.log(`🚀 ======== ROUTE LAYOUT JWT ======== 🚀`)
-
-  const handleChangeToken = (value: string) => {
-    invoke('plugin:jwt|test').then((result) => {
-      console.log(result)
-    })
-    invoke('plugin:jwt|validate', {
-      token: value,
-      secretKey: 'your-256-bit-secret'
-    }).then((result) => {
-      console.log(result)
-    })
-  }
-
   return (
     <div className="flex-1 h-full flex flex-col gap-2 p-2">
       <div className="flex flex-col gap-2">
@@ -52,10 +76,18 @@ function RouteComponent() {
         <ResizablePanel minSize={30} id="layout-tab" className="pl-2">
           <div className="flex-1 flex flex-col gap-1 justify-between h-full">
             <Panel title="Header" idAction="HEADER">
-              header
+              <ReactJsonView
+                enableClipboard={false}
+                name={false}
+                src={header.value}
+              />
             </Panel>
             <Panel title="Payload" idAction="PAYLOAD">
-              payload
+              <ReactJsonView
+                enableClipboard={false}
+                name={false}
+                src={payload.value}
+              />
             </Panel>
           </div>
         </ResizablePanel>

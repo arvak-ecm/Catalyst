@@ -1,0 +1,5 @@
+
+> catalyst@0.1.0 tauri F:\github\Catalyst
+> RUST_BACKTRACE=1 tauri dev
+
+ ELIFECYCLE  Command failed with exit code 1.

@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as DecodeLayoutImport } from './routes/decode/_layout'
 import { Route as Base64LayoutImport } from './routes/base64/_layout'
 import { Route as ApistreamLayoutImport } from './routes/apistream/_layout'
+import { Route as DecodeLayoutJwtIndexImport } from './routes/decode/_layout.jwt/index'
 import { Route as ApistreamLayoutEnviromentIndexImport } from './routes/apistream/_layout.enviroment/index'
 import { Route as ApistreamLayoutCollectionIndexImport } from './routes/apistream/_layout.collection/index'
 
@@ -25,7 +26,6 @@ const DecodeImport = createFileRoute('/decode')()
 const Base64Import = createFileRoute('/base64')()
 const ApistreamImport = createFileRoute('/apistream')()
 const IndexLazyImport = createFileRoute('/')()
-const DecodeLayoutJwtIndexLazyImport = createFileRoute('/decode/_layout/jwt/')()
 const DecodeLayoutBase64IndexLazyImport = createFileRoute(
   '/decode/_layout/base64/',
 )()
@@ -71,14 +71,6 @@ const ApistreamLayoutRoute = ApistreamLayoutImport.update({
   getParentRoute: () => ApistreamRoute,
 } as any)
 
-const DecodeLayoutJwtIndexLazyRoute = DecodeLayoutJwtIndexLazyImport.update({
-  id: '/jwt/',
-  path: '/jwt/',
-  getParentRoute: () => DecodeLayoutRoute,
-} as any).lazy(() =>
-  import('./routes/decode/_layout.jwt/index.lazy').then((d) => d.Route),
-)
-
 const DecodeLayoutBase64IndexLazyRoute =
   DecodeLayoutBase64IndexLazyImport.update({
     id: '/base64/',
@@ -87,6 +79,12 @@ const DecodeLayoutBase64IndexLazyRoute =
   } as any).lazy(() =>
     import('./routes/decode/_layout.base64/index.lazy').then((d) => d.Route),
   )
+
+const DecodeLayoutJwtIndexRoute = DecodeLayoutJwtIndexImport.update({
+  id: '/jwt/',
+  path: '/jwt/',
+  getParentRoute: () => DecodeLayoutRoute,
+} as any)
 
 const ApistreamLayoutEnviromentIndexRoute =
   ApistreamLayoutEnviromentIndexImport.update({
@@ -169,18 +167,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApistreamLayoutEnviromentIndexImport
       parentRoute: typeof ApistreamLayoutImport
     }
+    '/decode/_layout/jwt/': {
+      id: '/decode/_layout/jwt/'
+      path: '/jwt'
+      fullPath: '/decode/jwt'
+      preLoaderRoute: typeof DecodeLayoutJwtIndexImport
+      parentRoute: typeof DecodeLayoutImport
+    }
     '/decode/_layout/base64/': {
       id: '/decode/_layout/base64/'
       path: '/base64'
       fullPath: '/decode/base64'
       preLoaderRoute: typeof DecodeLayoutBase64IndexLazyImport
-      parentRoute: typeof DecodeLayoutImport
-    }
-    '/decode/_layout/jwt/': {
-      id: '/decode/_layout/jwt/'
-      path: '/jwt'
-      fullPath: '/decode/jwt'
-      preLoaderRoute: typeof DecodeLayoutJwtIndexLazyImport
       parentRoute: typeof DecodeLayoutImport
     }
   }
@@ -226,13 +224,13 @@ const Base64RouteWithChildren =
   Base64Route._addFileChildren(Base64RouteChildren)
 
 interface DecodeLayoutRouteChildren {
+  DecodeLayoutJwtIndexRoute: typeof DecodeLayoutJwtIndexRoute
   DecodeLayoutBase64IndexLazyRoute: typeof DecodeLayoutBase64IndexLazyRoute
-  DecodeLayoutJwtIndexLazyRoute: typeof DecodeLayoutJwtIndexLazyRoute
 }
 
 const DecodeLayoutRouteChildren: DecodeLayoutRouteChildren = {
+  DecodeLayoutJwtIndexRoute: DecodeLayoutJwtIndexRoute,
   DecodeLayoutBase64IndexLazyRoute: DecodeLayoutBase64IndexLazyRoute,
-  DecodeLayoutJwtIndexLazyRoute: DecodeLayoutJwtIndexLazyRoute,
 }
 
 const DecodeLayoutRouteWithChildren = DecodeLayoutRoute._addFileChildren(
@@ -257,8 +255,8 @@ export interface FileRoutesByFullPath {
   '/decode': typeof DecodeLayoutRouteWithChildren
   '/apistream/collection': typeof ApistreamLayoutCollectionIndexRoute
   '/apistream/enviroment': typeof ApistreamLayoutEnviromentIndexRoute
+  '/decode/jwt': typeof DecodeLayoutJwtIndexRoute
   '/decode/base64': typeof DecodeLayoutBase64IndexLazyRoute
-  '/decode/jwt': typeof DecodeLayoutJwtIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -268,8 +266,8 @@ export interface FileRoutesByTo {
   '/decode': typeof DecodeLayoutRouteWithChildren
   '/apistream/collection': typeof ApistreamLayoutCollectionIndexRoute
   '/apistream/enviroment': typeof ApistreamLayoutEnviromentIndexRoute
+  '/decode/jwt': typeof DecodeLayoutJwtIndexRoute
   '/decode/base64': typeof DecodeLayoutBase64IndexLazyRoute
-  '/decode/jwt': typeof DecodeLayoutJwtIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -283,8 +281,8 @@ export interface FileRoutesById {
   '/decode/_layout': typeof DecodeLayoutRouteWithChildren
   '/apistream/_layout/collection/': typeof ApistreamLayoutCollectionIndexRoute
   '/apistream/_layout/enviroment/': typeof ApistreamLayoutEnviromentIndexRoute
+  '/decode/_layout/jwt/': typeof DecodeLayoutJwtIndexRoute
   '/decode/_layout/base64/': typeof DecodeLayoutBase64IndexLazyRoute
-  '/decode/_layout/jwt/': typeof DecodeLayoutJwtIndexLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -296,8 +294,8 @@ export interface FileRouteTypes {
     | '/decode'
     | '/apistream/collection'
     | '/apistream/enviroment'
-    | '/decode/base64'
     | '/decode/jwt'
+    | '/decode/base64'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -306,8 +304,8 @@ export interface FileRouteTypes {
     | '/decode'
     | '/apistream/collection'
     | '/apistream/enviroment'
-    | '/decode/base64'
     | '/decode/jwt'
+    | '/decode/base64'
   id:
     | '__root__'
     | '/'
@@ -319,8 +317,8 @@ export interface FileRouteTypes {
     | '/decode/_layout'
     | '/apistream/_layout/collection/'
     | '/apistream/_layout/enviroment/'
-    | '/decode/_layout/base64/'
     | '/decode/_layout/jwt/'
+    | '/decode/_layout/base64/'
   fileRoutesById: FileRoutesById
 }
 
@@ -391,8 +389,8 @@ export const routeTree = rootRoute
       "filePath": "decode/_layout.tsx",
       "parent": "/decode",
       "children": [
-        "/decode/_layout/base64/",
-        "/decode/_layout/jwt/"
+        "/decode/_layout/jwt/",
+        "/decode/_layout/base64/"
       ]
     },
     "/apistream/_layout/collection/": {
@@ -403,12 +401,12 @@ export const routeTree = rootRoute
       "filePath": "apistream/_layout.enviroment/index.tsx",
       "parent": "/apistream/_layout"
     },
-    "/decode/_layout/base64/": {
-      "filePath": "decode/_layout.base64/index.lazy.tsx",
+    "/decode/_layout/jwt/": {
+      "filePath": "decode/_layout.jwt/index.tsx",
       "parent": "/decode/_layout"
     },
-    "/decode/_layout/jwt/": {
-      "filePath": "decode/_layout.jwt/index.lazy.tsx",
+    "/decode/_layout/base64/": {
+      "filePath": "decode/_layout.base64/index.lazy.tsx",
       "parent": "/decode/_layout"
     }
   }
