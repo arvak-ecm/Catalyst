@@ -16,7 +16,7 @@ const styles = {
   containerRow: 'flex flex-row items-left gap-1 mb-1 py-1',
   title_container: 'text-xs',
   itemActive:
-    'transition-colors data-[active=true]:border-primary data-[active=true]:bg-itemSelected'
+    'transition-colors data-[active=true]:border-primary data-[active=true]:bg-item-selected'
 }
 const ThemeLightConfig = () => {
   const context = use(AppContext)
@@ -61,7 +61,7 @@ const ThemeLightConfig = () => {
                 style={{ '--theme-primary': item.color } as React.CSSProperties}
                 onClick={() => handleChange({ color: item.name })}
               >
-                <div className="flex h-5 w-5 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-[--theme-primary]">
+                <div className="flex h-5 w-5 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-(--theme-primary)">
                   {theme.value.color === item.name ? (
                     <Check className="h-4 w-4 text-white " />
                   ) : null}

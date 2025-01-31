@@ -8,7 +8,7 @@ export function LastUpdate({ date }: LastUpdateProps) {
   return (
     <div
       className="flex items-center gap-2 px-3 py-1.5
-                   bg-primary/10 text-primary rounded-[--radius]
+                   bg-primary/10 text-primary rounded-(--radius)
                    hover:bg-primary/20 transition-colors duration-200
                    cursor-default"
     >

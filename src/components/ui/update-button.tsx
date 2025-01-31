@@ -11,7 +11,7 @@ export function UpdateButton({ isUpdating, onClick }: UpdateButtonProps) {
       onClick={onClick}
       disabled={isUpdating}
       className={`inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium
-                 rounded-[--radius] transition-colors duration-200
+                 rounded-(--radius) transition-colors duration-200
                  ${
                    isUpdating
                      ? 'bg-primary/10 text-primary cursor-wait'

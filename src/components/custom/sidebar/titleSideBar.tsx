@@ -23,7 +23,7 @@ const TitleSideBar = ({ className, icon, title, about }: props) => {
           <DialogTrigger asChild className="cursor-pointer">
             <SidebarMenuButton
               asChild
-              className="cursor-pointer h-10 fill-transparent shadow-sm text-accent "
+              className="cursor-pointer h-10 fill-transparent shadow-xs text-accent "
             >
               <div
                 className={cn(

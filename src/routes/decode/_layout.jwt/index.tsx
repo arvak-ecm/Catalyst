@@ -39,14 +39,11 @@ const handleChangeToken = async (value: string) => {
     cleanValues()
     return
   }
-  invoke('plugin:jwt|test').then((result) => {
-    console.log(result)
-  })
   const result = (await invoke('plugin:jwt|validate', {
     token: value,
     secretKey: 'your-256-bit-secret'
   })) as JwtResponse
-  if (result.error) {
+  if (!result.decodeBase) {
     cleanValues()
     return
   }
@@ -77,6 +74,8 @@ function RouteComponent() {
           <div className="flex-1 flex flex-col gap-1 justify-between h-full">
             <Panel title="Header" idAction="HEADER">
               <ReactJsonView
+                displayObjectSize={false}
+                displayDataTypes={false}
                 enableClipboard={false}
                 name={false}
                 src={header.value}
@@ -84,6 +83,8 @@ function RouteComponent() {
             </Panel>
             <Panel title="Payload" idAction="PAYLOAD">
               <ReactJsonView
+                displayObjectSize={false}
+                displayDataTypes={false}
                 enableClipboard={false}
                 name={false}
                 src={payload.value}

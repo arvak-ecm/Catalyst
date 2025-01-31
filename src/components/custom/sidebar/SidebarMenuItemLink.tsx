@@ -19,7 +19,7 @@ const SidebarMenuItemLink = ({ title, icon, href }: props) => {
         <SidebarMenuButton asChild className="cursor-pointer">
           <Link
             to={href}
-            className="flex items-center gap-2 data-[status=active]:text-accent-foreground border-[1px] border-transparent data-[status=active]:border-primary data-[status=active]:border data-[status=active]:bg-itemSelected [&>svg]:data-[status=active]:fill-icon-active transition-all"
+            className="flex items-center gap-2 data-[status=active]:text-accent-foreground border-[1px] border-transparent data-[status=active]:border-primary data-[status=active]:border data-[status=active]:bg-(--color-item-selected) data-[status=active]:[&>svg]:fill-icon-active transition-all"
           >
             {icon}
             <span>{title}</span>

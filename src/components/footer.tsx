@@ -9,7 +9,7 @@ const Footer = ({ className, children, ...props }: props) => {
   return (
     <footer
       className={cn(
-        'min-h-[--layout-footer-height] border-t border-panel-border bg-main ',
+        'min-h-(--layout-footer-height) border-t border-panel-border bg-main ',
         className
       )}
       {...props}

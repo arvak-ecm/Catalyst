@@ -1,16 +1,16 @@
+import tailwindcss from '@tailwindcss/vite'
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
-import autoprefixer from 'autoprefixer'
 import * as path from 'node:path'
-import tailwindcss from 'tailwindcss'
 import { defineConfig } from 'vite'
 
 const host = process.env.TAURI_DEV_HOST
 
 // https://vitejs.dev/config/
-export default defineConfig(async () => ({
+export default defineConfig({
   base: './',
   plugins: [
+    tailwindcss(),
     TanStackRouterVite(),
     react({
       babel: {
@@ -18,11 +18,6 @@ export default defineConfig(async () => ({
       }
     })
   ],
-  css: {
-    postcss: {
-      plugins: [tailwindcss, autoprefixer]
-    }
-  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
@@ -50,4 +45,4 @@ export default defineConfig(async () => ({
       '@': path.resolve(__dirname, './src')
     }
   }
-}))
+})

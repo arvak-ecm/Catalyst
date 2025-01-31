@@ -42,12 +42,12 @@ const TabsList = React.forwardRef<
 TabsList.displayName = TabsPrimitive.List.displayName
 
 const tabTriggerVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all duration-300  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all duration-300  focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
         default:
-          'rounded-sm data-[state=active]:bg-background data-[state=active]:text-accent-foreground/90 data-[state=active]:shadow',
+          'rounded-sm data-[state=active]:bg-background data-[state=active]:text-accent-foreground/90 data-[state=active]:shadow-sm',
         mini: 'border-b-[2px] border-b-transparent gap-2 data-[state=active]:border-b-[2px] data-[state=active]:border-b-primary  data-[state=active]:text-accent-foreground/90'
       },
       size: {
@@ -84,7 +84,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ',
+      'mt-2 ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ',
       className
     )}
     {...props}

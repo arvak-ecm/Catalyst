@@ -15,7 +15,7 @@ const Item = ({ depth, title, arrow, context }: props) => {
   return (
     <InteractiveComponent
       className={cn(
-        'item-tree relative flex flex-row items-center transition-client text-muted-foreground w-full data-[rct-item-focus=true]:text-accent-foreground  bg-transparent cursor-default py-1.5 px-2 focus-visible:outline-none z-[2] before:'
+        'item-tree relative flex flex-row items-center transition-client text-muted-foreground w-full data-[rct-item-focus=true]:text-accent-foreground  bg-transparent cursor-default py-1.5 px-2 focus-visible:outline-hidden z-2 before:'
       )}
       type="button"
       {...context.itemContainerWithoutChildrenProps}

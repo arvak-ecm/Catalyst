@@ -18,9 +18,14 @@ struct Claims {
 }
 
 #[derive(Debug, Serialize)]
+
 struct TokenValidationResult {
-    header: jsonwebtoken::Header,
+    header: Option<jsonwebtoken::Header>,
     payload: Claims,
+    #[serde(rename = "decodeBase")]
+    decode_base: bool,
+    #[serde(rename = "decodeSecurity")]
+    decode_security: bool,
     error: Option<String>,
 }
 
@@ -37,40 +42,71 @@ async fn test() -> Result<String, String> {
 }
 
 #[tauri::command]
-async fn validate(
-    token: String,
-    secret_key: Option<String>,
-) -> Result<TokenValidationResult, String> {
-    let header = decode_header(&token).map_err(|e| e.to_string())?;
+async fn validate(token: String, secret_key: Option<String>) -> TokenValidationResult {
+    let header = match decode_header(&token) {
+        Ok(h) => Some(h),
+        Err(e) => {
+            return TokenValidationResult {
+                header: None,
+                payload: Claims {
+                    sub: None,
+                    name: None,
+                    iat: None,
+                    exp: None,
+                    extra: HashMap::new(),
+                },
+                decode_base: false,
+                decode_security: false,
+                error: Some(format!("Failed to decode header: {}", e)),
+            };
+        }
+    };
 
-    let decoded_payload: Claims = match decode_jwt_payload(token.as_str()).and_then(|payload| {
-        serde_json::from_slice(payload.to_string().as_bytes()).map_err(|e| e.to_string())
-    }) {
-        Ok(claims) => claims,
-        Err(_) => Claims {
-            sub: None,
-            name: None,
-            iat: None,
-            exp: None,
-            extra: HashMap::new(),
+    let decoded_payload = match decode_jwt_payload(token.as_str()) {
+        Ok(payload) => match serde_json::from_slice::<Claims>(&payload.to_string().into_bytes()) {
+            Ok(claims) => claims,
+            Err(_e) => Claims {
+                sub: None,
+                name: None,
+                iat: None,
+                exp: None,
+                extra: HashMap::new(),
+            },
         },
+        Err(e) => {
+            return TokenValidationResult {
+                header: None,
+                payload: Claims {
+                    sub: None,
+                    name: None,
+                    iat: None,
+                    exp: None,
+                    extra: HashMap::new(),
+                },
+                decode_base: false,
+                decode_security: false,
+                error: Some(format!("Failed to decode payload: {}", e)),
+            };
+        }
     };
 
     if let Some(key) = secret_key {
-        return decode_by_secret(token, key, decoded_payload, header);
+        return decode_by_secret(token, key, decoded_payload, header.unwrap());
     }
 
-    Ok(TokenValidationResult {
+    TokenValidationResult {
         header,
         payload: decoded_payload,
+        decode_base: true,
+        decode_security: false,
         error: Some("Secret key not provided, token not validated.".to_string()),
-    })
+    }
 }
 
 fn decode_jwt_payload(token: &str) -> Result<Value, String> {
     let parts: Vec<&str> = token.split('.').collect();
     if parts.len() != 3 {
-        return Err("Invalid JWT format".to_string());
+        return Err("INVALID_JWT".to_string());
     }
 
     let padded_payload = add_padding(parts[1]);
@@ -92,7 +128,7 @@ fn decode_by_secret(
     secret_key: String,
     decoded_payload: Claims,
     header: jsonwebtoken::Header,
-) -> Result<TokenValidationResult, String> {
+) -> TokenValidationResult {
     let decoding_key = DecodingKey::from_secret(secret_key.as_bytes());
 
     let mut validation = Validation::new(Algorithm::HS256);
@@ -101,11 +137,13 @@ fn decode_by_secret(
 
     let token_data = decode::<Claims>(&token, &decoding_key, &validation);
 
-    return Ok(TokenValidationResult {
-        header,
+    TokenValidationResult {
+        header: Some(header),
         payload: decoded_payload,
+        decode_base: true,
+        decode_security: token_data.is_ok(),
         error: token_data.err().map(|e| e.to_string()),
-    });
+    }
 }
 
 fn add_padding(base64_str: &str) -> String {

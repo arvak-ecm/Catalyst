@@ -54,7 +54,7 @@ const IconCircleYellow = (
 
 const IconCircleGreen = (
   <svg
-    className="rotate-90 [&>.icon]:hover:block w-[12px] h-[12px]"
+    className="rotate-90 hover:[&>.icon]:block w-[12px] h-[12px]"
     viewBox="0 0 155 155"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

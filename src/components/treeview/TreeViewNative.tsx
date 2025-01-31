@@ -50,7 +50,7 @@ function InputEdit({ node }: { node: NodeApi<any> }) {
       </label>
       <input
         id="edit"
-        className="text-sm rounded-sm border border-primary p-0 ring-0 focus:outline-none focus:ring-0"
+        className="text-sm rounded-sm border border-primary p-0 ring-0 focus:outline-hidden focus:ring-0"
         autoFocus
         type="text"
         defaultValue={node.data.name}

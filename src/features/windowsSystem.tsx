@@ -29,7 +29,7 @@ const IconClose = (
 const appWindow = getCurrentWindow()
 
 const Styles = {
-  icon: 'flex items-center justify-center w-11 h-full text-primary-foreground hover:bg-accent/30 focus:outline-none transition-colors'
+  icon: 'flex items-center justify-center w-11 h-full text-primary-foreground hover:bg-accent/30 focus:outline-hidden transition-colors'
 }
 
 const WindowsSystemBar = () => {

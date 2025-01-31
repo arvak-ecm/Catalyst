@@ -35,7 +35,7 @@ const RootComponent = () => {
       <>
         <div
           className={cn(
-            'absolute h-screen w-screen top-0 left-0 backdrop-blur-sm bg-transparent z-50 rounded-xl transition-opacity duration-custom ease-in-out',
+            'absolute h-screen w-screen top-0 left-0 backdrop-blur-xs bg-transparent z-50 rounded-xl transition-opacity duration-custom ease-in-out',
             isResizing
               ? 'opacity-80 bg-primary/60 pointer-events-auto'
               : 'opacity-0 pointer-events-none'
