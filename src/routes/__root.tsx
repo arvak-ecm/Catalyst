@@ -35,7 +35,7 @@ const RootComponent = () => {
       <>
         <div
           className={cn(
-            'absolute h-screen w-screen top-0 left-0 backdrop-blur-xs bg-transparent z-50 rounded-xl transition-opacity duration-custom ease-in-out',
+            'absolute h-screen w-screen top-0 left-0 backdrop-blur-xs bg-transparent z-50 transition-opacity duration-custom ease-in-out',
             isResizing
               ? 'opacity-80 bg-primary/60 pointer-events-auto'
               : 'opacity-0 pointer-events-none'
@@ -56,7 +56,7 @@ const RootComponent = () => {
             </div>
             {context?.os === 'windows' && <WindowsSystemBar />}
           </TitleBar>
-          <main className="flex-1 rounded-bl-xl rounded-br-xl border-l border-r border-panel-border border-b overflow-hidden">
+          <main className="flex-1 border-l border-r border-panel-border border-b overflow-hidden">
             {/* <AnimatedOutlet /> */}
             <Outlet />
             {/* <TanStackRouterDevtools /> */}

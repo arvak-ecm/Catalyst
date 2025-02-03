@@ -12,19 +12,12 @@ import { useEffect } from 'react'
 
 interface props {
   title: string
-  className?: string
   idAction: string
   children: React.ReactNode
   isFooter?: boolean
 }
 
-const Panel = ({
-  title,
-  className,
-  idAction,
-  children,
-  isFooter = false
-}: props) => {
+const Panel = ({ title, idAction, children, isFooter = false }: props) => {
   actionBar.value = ''
   const actionBarEffect = effect(() => {
     switch (actionBar.value) {

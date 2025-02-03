@@ -39,6 +39,10 @@ const NavigationApp = () => {
             <CodeXml />
             <span>Home</span>
           </DropdownMenuItemLink>
+          <DropdownMenuItemLink to="/apichart" onClick={() => setOpen(false)}>
+            <CodeXml />
+            <span>API Chart</span>
+          </DropdownMenuItemLink>
           <DropdownMenuItemLink
             to="/apistream/enviroment"
             onClick={() => setOpen(false)}

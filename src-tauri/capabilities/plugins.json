@@ -4,6 +4,7 @@
   "local": true,
   "windows": ["main"],
   "permissions": [
+    "opener:default",
     "log:default",
     "dialog:allow-open",
     "dialog:allow-confirm",

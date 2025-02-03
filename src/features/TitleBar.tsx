@@ -30,8 +30,8 @@ const handleDblClick = (event: MouseEvent<HTMLDivElement>) => {
 }
 
 const Styles = {
-  mac: 'flex justify-between items-center px-2 overflow-hidden h-(--layout-header-height) border bg-primary border-primary transition-colors rounded-tl-lg rounded-tr-lg',
-  win: 'flex justify-between items-center  overflow-hidden h-(--layout-header-height) border bg-primary border-primary transition-colors rounded-tl-lg rounded-tr-lg'
+  mac: 'flex justify-between items-center px-2 overflow-hidden h-(--layout-header-height) border bg-primary border-primary transition-colors rounded-tl-xl rounded-tr-xl',
+  win: 'flex justify-between items-center  overflow-hidden h-(--layout-header-height) border bg-primary border-primary transition-colors'
 }
 
 const TitleBar = ({ className, children }: TitleBarProps) => {

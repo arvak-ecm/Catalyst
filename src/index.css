@@ -1,34 +1,5 @@
-@import './styles/fonts.css';
-
 @import 'tailwindcss';
-@custom-variant dark (&:where(.dark, .dark *));
 @plugin "tailwindcss-animate";
-@config '../tailwind.config.js';
-
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-@utility transition-client {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: var(--transition-duration);
-  animation-duration: var(--animation-duration);
-}
 
 @theme {
   --font-sans: 'Open Sans', sans-serif;
@@ -42,8 +13,8 @@
   --color-item-hover: hsl(var(--primary) / var(--opacity-item-hover));
   --color-panel-border: hsl(var(--muted-foreground) / 0.3);
   --color-panel: hsl(var(--muted));
-  --color-system: hsl(var(--color-system));
-  --color-system-border: hsl(var(--color-system-border));
+  --color-system: hsl(var(--system));
+  --color-system-border: hsl(var(--system-border));
 
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -100,8 +71,8 @@
     --gantt-row-height: 30px;
     --form-width: 60%;
     --form-input-height: 64px;
-    --color-system: 224, 10%, 94%;
-    --color-system-border: 181, 1%, 73%;
+    --system: 224, 10%, 94%;
+    --system-border: 181, 1%, 73%;
     --layout-header-height: 48px;
     --layout-footer-height: 24px;
     --layout-container-with-footer-height: calc(100svh - 48px - 24px);
@@ -123,14 +94,6 @@
 
     --transition-duration: 300ms;
     --animation-duration: 300ms;
-  }
-}
-
-@layer utilities {
-  .das {
-    --sidebar-background: 0 0% 98%;
-
-    --main-background: 0 0% 98%;
   }
 }
 
